@@ -1,48 +1,37 @@
 <x-app-layout>
     <x-slot name="header">
-        @can('add students')
-        <div class="flex justify-end">
-        
-            <button type="button" onclick="showAddModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Add Student
-            </button>
-
-         </div>
-   
-        @endcan
+        <button onclick="showAddModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add Student
+        </button>
     </x-slot>
 
     <div class="py-12">
-        <div class="mr-6 ml-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 text-xl">
+                <div class="p-6 text-gray-900">
                     {{ __("List of students enrolled in Mater Dei College") }}
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($students as $student)
-                        <div class="bg-white shadow-md rounded-lg overflow-hidden m-6">
-                            <div class="p-6">
-                                <h3 class="text-lg font-semibold mb-2">{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}.</h3>
-                                <p class="text-gray-600">Course: {{ $student->course }}</p>
-                                <p class="text-gray-600">Address: {{ $student->address }}</p>
-                                <p class="text-gray-600 mb-2">DOB: {{ $student->DOB }}</p>
-                            
-                                <form action="{{ route('delete', ['id' => $student->id]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    @can('edit students')
-                                        <button type="button" onclick="showUpdateModal({{ $student }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            View & Edit
-                                        </button>
-                                    @endcan
-                                    @can('delete students')
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete this student?')" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                            Delete
-                                        </button>
-                                    @endcan
-                                </form>
-                            </div>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden m-6">
+                        <div class="p-6">
+                            <h3 class="text-lg font-semibold mb-2">{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}.</h3>
+                            <p class="text-gray-600">Course: {{ $student->course }}</p>
+                            <p class="text-gray-600">Address: {{ $student->address }}</p>
+                            <p class="text-gray-600 mb-2">DOB: {{ $student->DOB }}</p>
+                        
+                            <form action="{{ route('delete', ['id' => $student->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" onclick="showUpdateModal({{ $student }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    View & Edit
+                                </button>
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete this student?')" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                    Delete
+                                </button>
+                            </form>
                         </div>
+                    </div>
                     @endforeach
                 </div>
             </div>
@@ -54,7 +43,7 @@
         <div class="bg-white rounded-lg overflow-hidden shadow-xl max-w-lg w-full">
             <div class="px-6 py-4">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-xl font-semibold">Add a student</h3>
+                    <h3 class="text-xl font-semibold">Add a Student</h3>
                     <button onclick="closeAddModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
                 </div>
                 <form action="{{ route('create.student') }}" method="POST">

@@ -12,3 +12,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/products', [ProductController::class, 'index'])->middleware('auth:api');
 
 Route::get('/students', [StudentController::class, 'index'])->middleware('auth:api');
+
+Route::delete('/delete/{id}', [StudentController::class, 'delete']);
