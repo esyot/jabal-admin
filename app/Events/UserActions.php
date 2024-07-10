@@ -17,9 +17,14 @@ class UserActions
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(
+        public string $name,
+        public string $email, 
+        public string $action, 
+        public string $page
+        )
     {
-        //
+        
     }
 
 

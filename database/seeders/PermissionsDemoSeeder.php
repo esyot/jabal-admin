@@ -25,7 +25,7 @@ class PermissionsDemoSeeder extends Seeder
         $adminRole->syncPermissions(['add students', 'edit students', 'delete students', 'edit users']);
 
         $teacherRole = Role::create(['name' => 'teacher']);
-        $teacherRole->syncPermissions(['edit students']);
+        $teacherRole->syncPermissions(['edit students', 'delete students' , 'add students']);
 
         $teacherRole = Role::create(['name' => 'student']);
         $teacherRole->syncPermissions(['']);

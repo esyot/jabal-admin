@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\UserActions;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Models\Monitor;
 
 class UserActionStore
 {
@@ -21,6 +22,11 @@ class UserActionStore
      */
     public function handle(UserActions $event): void
     {
-        //
+        $monitor = Monitor::create([
+            'user_name' => $event->name,
+            'user_email' => $event->email,
+            'action' => $event->action,
+            'page' => $event->page,            
+        ]);
     }
 }

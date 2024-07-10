@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
+    <div class="flex justify-between items-center">
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    {{ __("List of enrolled students") }}
+        </h2>
         @can('add students')
-        <div class="flex justify-end">
         
-            <button type="button" onclick="showAddModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        
+            <button type="button" onclick="showAddModal()" 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 p-2 rounded">
                 Add Student
             </button>
 
@@ -12,12 +17,10 @@
         @endcan
     </x-slot>
 
+
     <div class="py-12">
         <div class="mr-6 ml-6">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 text-xl">
-                    {{ __("List of students enrolled in Mater Dei College") }}
-                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($students as $student)
                         <div class="bg-white shadow-md rounded-lg overflow-hidden m-6">
@@ -27,14 +30,16 @@
                                 <p class="text-gray-600">Address: {{ $student->address }}</p>
                                 <p class="text-gray-600 mb-2">DOB: {{ $student->DOB }}</p>
                             
-                                <form action="{{ route('delete', ['id' => $student->id]) }}" method="POST">
+                                <form action="{{ route('student.delete', ['id' => $student->id]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
+
                                     @can('edit students')
                                         <button type="button" onclick="showUpdateModal({{ $student }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             View & Edit
                                         </button>
                                     @endcan
+                                    
                                     @can('delete students')
                                         <button type="submit" onclick="return confirm('Are you sure you want to delete this student?')" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                             Delete
@@ -57,7 +62,7 @@
                     <h3 class="text-xl font-semibold">Add a student</h3>
                     <button onclick="closeAddModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
                 </div>
-                <form action="{{ route('create.student') }}" method="POST">
+                <form action="{{ route('student.create') }}" method="POST">
                     @csrf 
                     @method('POST')
                     <div class="form-group">
@@ -115,7 +120,7 @@
                     <h3 class="text-xl font-semibold">Update Student</h3>
                     <button onclick="closeUpdateModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
                 </div>
-                <form id="updateForm" action="{{ route('update.student') }}" method="POST">
+                <form id="updateForm" action="{{ route('student.update') }}" method="POST">
                     @csrf 
                     @method('POST')
                     <input type="hidden" id="update_id" name="id">
